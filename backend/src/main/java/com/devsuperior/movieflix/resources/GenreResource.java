@@ -9,26 +9,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.movieflix.dto.UserDTO;
-import com.devsuperior.movieflix.services.UserService;
+import com.devsuperior.movieflix.dto.GenreDTO;
+import com.devsuperior.movieflix.services.GenreService;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserResource {
+@RequestMapping(value = "/genres")
+public class GenreResource {
 	
 	@Autowired
-	private UserService service;
+	private GenreService service;
 	
 	@GetMapping
-	public ResponseEntity<List<UserDTO>> findAll() {
-		List<UserDTO> list = service.findAll();
+	public ResponseEntity<List<GenreDTO>> findAll() {
+		List<GenreDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);	
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+	public ResponseEntity<GenreDTO> findById(@PathVariable Long id){
 		
-		UserDTO dto = service.findById(id);
+		GenreDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	
 	}

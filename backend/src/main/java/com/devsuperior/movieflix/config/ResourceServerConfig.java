@@ -30,7 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter  {
 	private JwtTokenStore tokenStore;
 	
 	private static final String[] PUBLIC = {"/oauth/token", "/h2-console/**"};
-	//private static final String[] OPERATOR_OR_ADMIN = {"/products/**", "/categories/**"};
+	//private static final String[] OPERATOR_OR_ADMIN = {"/movies/**", "/genres/**"};
 	//private static final String[] ADMIN = {"/users/**"};
 
 	@Override

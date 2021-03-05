@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+
 import com.devsuperior.movieflix.entities.Genre;
 import com.devsuperior.movieflix.entities.Movie;
 
@@ -11,12 +13,19 @@ public class MovieDTO implements Serializable {
 
 	// Attributes
 	private static final long serialVersionUID = 1L;
+	
 	private Long id;
+	
+	@NotBlank(message = "Campo Obrigatório!")
 	private String title;
+	
+	@NotBlank(message = "Campo Obrigatório!")
 	private String subTitle;
+	
 	private Integer year;
 	private String imgUrl;
 	private String synopsis;
+	
 	private Genre genre;
 
 	private Set<ReviewDTO> reviews = new HashSet<>();
@@ -48,7 +57,7 @@ public class MovieDTO implements Serializable {
 		genre = entity.getGenre();
 		entity.getReviews().forEach(review -> this.reviews.add(new ReviewDTO(review)));
 	}
-
+	
 	// Getters and setters
 	public Long getId() {
 		return id;
@@ -108,6 +117,11 @@ public class MovieDTO implements Serializable {
 
 	public Set<ReviewDTO> getReviews() {
 		return reviews;
+	}
+
+	public long getGenreId() {
+		
+		return genre.getId();
 	}
 
 }
