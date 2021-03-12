@@ -1,8 +1,6 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import com.devsuperior.movieflix.entities.Role;
@@ -14,7 +12,7 @@ public class RoleDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String authority;
-	private List<UserDTO> users = new ArrayList<>();
+	
 
 	// Constructors
 	public RoleDTO() {
@@ -36,7 +34,6 @@ public class RoleDTO implements Serializable {
 
 	public RoleDTO(Role entity, Set<User> users) {
 		this(entity);
-		users.forEach(cat -> this.users.add(new UserDTO(cat)));
 
 	}
 
@@ -55,10 +52,6 @@ public class RoleDTO implements Serializable {
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
-	}
-
-	public List<UserDTO> getUsers() {
-		return users;
 	}
 
 }

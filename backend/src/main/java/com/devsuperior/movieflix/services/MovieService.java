@@ -1,7 +1,9 @@
 package com.devsuperior.movieflix.services;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,11 +29,18 @@ public class MovieService implements Serializable {
 	@Autowired
 	private GenreRepository genreRepository;
 	
+	
 	@Transactional(readOnly = true)
-	public Page<MovieDTO> findAllPaged(Long GenreId, String title, PageRequest pageRequest) {
-		Genre genre = (GenreId == 0) ? null : genreRepository.getOne(GenreId);
-		Page<Movie> list = repository.find(genre, title, pageRequest);
+	public Page<MovieDTO> findAllPaged(Long genreId, String title, PageRequest pageRequest) {
+		Genre genre = (genreId == 0) ? null : genreRepository.getOne(genreId);
+		Page<Movie> list = repository.find(genre, pageRequest);
 		return list.map(x -> new MovieDTO(x));
+	}
+	
+	@Transactional(readOnly = true)
+	public List<MovieDTO> findAll(){
+		List<Movie> list = repository.findAll();
+		return list.stream().map(x -> new MovieDTO(x)).collect(Collectors.toList());
 	}
 
 	

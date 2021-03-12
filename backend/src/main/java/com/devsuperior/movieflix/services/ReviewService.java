@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.movieflix.dto.ReviewDTO;
+import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.entities.Review;
+import com.devsuperior.movieflix.entities.User;
+import com.devsuperior.movieflix.repositories.MovieRepository;
 import com.devsuperior.movieflix.repositories.ReviewRepository;
 import com.devsuperior.movieflix.services.exceptions.ResourceNotFoundException;
 
@@ -21,6 +24,11 @@ public class ReviewService implements Serializable {
 
 	@Autowired
 	private ReviewRepository repository;
+	
+	@Autowired AuthService authService;
+	
+	@Autowired
+	private MovieRepository movieRepository;
 
 	@Transactional(readOnly = true)
 	public List<ReviewDTO> findAll() {
@@ -38,10 +46,17 @@ public class ReviewService implements Serializable {
 	
 	@Transactional
 	public ReviewDTO insert(ReviewDTO dto) {
+		User user = authService.authenticated();
 		Review entity = new Review();
-		entity.setMovie(dto.getMovie());
 		entity.setText(dto.getText());
-		entity.setUser(dto.getUser());
+		entity.setUser(user);
+		
+		//É possivel que seja problema de autenticação! Pois o teste sem ser autenticado esta passando!!!
+		Movie movie = movieRepository.getOne(dto.getMovieId());
+		entity.setMovie(movie);
+		//********************************
+		
+		
 		entity = repository.save(entity);
 		return new ReviewDTO(entity);
 	}

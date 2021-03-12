@@ -23,22 +23,30 @@ public class MovieResource {
 	private MovieService service;
 
 	// Method
+
+	/*@GetMapping
+	public ResponseEntity<List<MovieDTO>> findAll() {
+		List<MovieDTO> list = service.findAll();
+		return ResponseEntity.ok().body(list);
+	}*/
+
 	@GetMapping
 	public ResponseEntity<Page<MovieDTO>> findAllPaged(
 
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "size", defaultValue = "8") Integer size,
 			@RequestParam(value = "genreId", defaultValue = "0") Long genreId,
 			@RequestParam(value = "title", defaultValue = "") String title,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "size", defaultValue = "8") Integer size,
 			@RequestParam(value = "orderBy", defaultValue = "title") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 
 		PageRequest pageRequest = PageRequest.of(page, size, Direction.valueOf(direction), orderBy);
 
-		Page<MovieDTO> list = service.findAllPaged(genreId, title, pageRequest);
+		Page<MovieDTO> list = service.findAllPaged(genreId, title.trim(), pageRequest);
 		return ResponseEntity.ok().body(list);
 	}
 
+	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<MovieDTO> findById(@PathVariable Long id) {
 

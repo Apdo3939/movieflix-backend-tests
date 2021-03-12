@@ -64,6 +64,7 @@ public class ReviewResourceIT {
 		newReviewDTO.setMovieId(1L);
 	}
 
+	//pass
 	@Test
 	public void insertShouldReturnUnauthorizedWhenNotValidToken() throws Exception {
 
@@ -77,6 +78,7 @@ public class ReviewResourceIT {
 
 		result.andExpect(status().isUnauthorized());
 	}
+	
 	
 	@Test
 	public void insertShouldReturnForbiddenWhenVisitorAuthenticated() throws Exception {

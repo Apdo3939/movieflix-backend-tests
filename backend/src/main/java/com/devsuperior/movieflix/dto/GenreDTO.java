@@ -1,8 +1,8 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+
+import javax.validation.constraints.NotBlank;
 
 import com.devsuperior.movieflix.entities.Genre;
 
@@ -11,9 +11,10 @@ public class GenreDTO implements Serializable {
 	// Attributes
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	
+	@NotBlank(message = "Campo obrigatório!")
 	private String name;
 
-	private Set<MovieDTO> movies = new HashSet<>();
 
 	// Constructors
 	public GenreDTO() {
@@ -31,7 +32,7 @@ public class GenreDTO implements Serializable {
 		id = entity.getId();
 		name = entity.getName();
 	}
-
+	
 	// Getters and setters
 	public Long getId() {
 		return id;
@@ -47,10 +48,6 @@ public class GenreDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Set<MovieDTO> getMovies() {
-		return movies;
 	}
 
 }

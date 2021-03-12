@@ -72,6 +72,7 @@ public class MovieResourceIT {
 		memberPassword = "123456";
 	}
 
+	//pass
 	@Test
 	public void findByIdShouldReturnUnauthorizedWhenNotValidToken() throws Exception {
 
@@ -112,6 +113,7 @@ public class MovieResourceIT {
 		Assertions.assertTrue(getReviews(result).length >= 0);
 	}
 
+	//pass
 	@Test
 	public void findByIdShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
 
@@ -125,6 +127,7 @@ public class MovieResourceIT {
 		result.andExpect(status().isNotFound());
 	}
 	
+	//pass
 	@Test
 	public void findAllPagedShouldReturnUnauthorizedWhenNoTokenGiven() throws Exception {
 
@@ -135,6 +138,7 @@ public class MovieResourceIT {
 		result.andExpect(status().isUnauthorized());
 	}	
 
+	
 	@Test
 	public void findAllPagedShouldReturnOrderedPageWhenVisitorAuthenticated() throws Exception {
 
