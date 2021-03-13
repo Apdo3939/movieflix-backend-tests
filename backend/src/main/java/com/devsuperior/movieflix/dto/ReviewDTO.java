@@ -2,6 +2,10 @@ package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import com.devsuperior.movieflix.entities.Review;
 
 public class ReviewDTO implements Serializable {
@@ -9,6 +13,10 @@ public class ReviewDTO implements Serializable {
 	// Attributes
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	
+	@Size(min = 1, max = 255, message = "Nome inválido, por favor um nome entre 5 a 60 caracteres!" )
+	@NotBlank(message = "Campo obrigatório!")
+	@NotEmpty
 	private String text;
 
 	private UserDTO user;
@@ -52,11 +60,6 @@ public class ReviewDTO implements Serializable {
 
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	public void setMovieId(long id) {
-		this.id = id;
-
 	}
 
 	public UserDTO getUser() {

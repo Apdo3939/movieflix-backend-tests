@@ -6,11 +6,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.movieflix.dto.ReviewDTO;
-import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.entities.Review;
 import com.devsuperior.movieflix.entities.User;
 import com.devsuperior.movieflix.repositories.MovieRepository;
@@ -44,20 +44,19 @@ public class ReviewService implements Serializable {
 		return new ReviewDTO(entity);
 	}
 	
+	@PreAuthorize("hasAnyRole('MEMBER')")
 	@Transactional
-	public ReviewDTO insert(ReviewDTO dto) {
+	public ReviewDTO insert( ReviewDTO dto) {
+		
 		User user = authService.authenticated();
+		authService.validateSelfOrAdmin(user.getId());
+		
 		Review entity = new Review();
 		entity.setText(dto.getText());
+		entity.setMovie(movieRepository.getOne(dto.getMovieId()));
 		entity.setUser(user);
 		
-		//É possivel que seja problema de autenticação! Pois o teste sem ser autenticado esta passando!!!
-		Movie movie = movieRepository.getOne(dto.getMovieId());
-		entity.setMovie(movie);
-		//********************************
-		
-		
-		entity = repository.save(entity);
+		repository.save(entity);
 		return new ReviewDTO(entity);
 	}
 
